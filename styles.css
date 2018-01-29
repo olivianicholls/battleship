@@ -1,0 +1,16 @@
+.ships {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+#container {
+  height: 800px;
+  width: 800px;
+  margin: 200px;
+}
+.boardSquare {
+  width: 80px;
+  float: left;
+  height: 80px;
+  border: 1px solid black;
+}
