@@ -12,25 +12,41 @@ function coordinate(x, y) {
 }
 
 // gameboard factory
-function makeBoard() {
-  let container = document.getElementById("container");
-  
-  for(let i = 1; i <= 100; i++) {
-    let newDiv = document.createElement("div");
-    newDiv.className = "boardSquare";
-    newDiv.id = i;
-    container.appendChild(newDiv);
+let gameboardFactory = {
+  makeBoard: function() {
+    let gameboard = document.getElementById("gameboard");
+    let sideCount = 1
+    for(let i = 1; i <= 100; i++) {
+      let newDiv = document.createElement("div");
+      newDiv.className = "boardSquare";
+      newDiv.id = i;
+      gameboard.appendChild(newDiv);
+      
+      if (i === 1 || i === 11 || i === 21|| i === 31 || i === 41 || i === 51 || i === 61 || i === 71 || i === 81 || i === 91) {
+        
+        let number = document.createElement('p');
+        newDiv.insertAdjacentElement('beforebegin',number);
+        number.textContent = sideCount;
+        number.className = 'numbers'
+        sideCount++;
+      }
+    }
+  },
+  clearBoard: function() {
+   for(let i = 1; i <= 100; i++) {
+     let boardSquare = document.getElementById(i);
+     boardSquare.textContent = "";
+   }
   }
 }
-makeBoard();
 
 // Create ships
-
 let usedPositions = [];
 let toBeRemoved = [];
 let shipFactory = {
   ships: [],
-  ship: function(length) {
+  ship: function(length, name) {
+    this.name = name;
     this.hit = new Array(length);
     this.hitCounter = 0;
     this.firstCoords = new Array(new coordinate());
@@ -39,8 +55,8 @@ let shipFactory = {
     this.sunk = false;
     this.positions = new Array(length);
   },
-  createShip:function(length) {
-    let newShip = new this.ship(length);
+  createShip:function(length, name) {
+    let newShip = new this.ship(length, name);
     this.ships.push(newShip);
     let divNumber = parseInt(newShip.firstDivNumber);
     for(let i = 0; i < newShip.positions.length; i++){
@@ -72,7 +88,7 @@ let shipFactory = {
               usedPositions.push(this.ships[k].positions[l]);
             }
           }
-          this.createShip(newShip.positions.length);
+          this.createShip(newShip.positions.length, newShip.name);
         }
       }
       if (match === false) {
@@ -80,109 +96,154 @@ let shipFactory = {
       }
     }
   },
-};
-
-shipFactory.createShip(2);
-shipFactory.createShip(3);
-shipFactory.createShip(3);
-shipFactory.createShip(4);
-shipFactory.createShip(5);
-
-// Create Scoreboard
-let scoreboard = {
-  remainingShips: 5,
-  remainingMissiles: 35,
-  showRemainingShips: function() {
-    let shipsLeft = document.getElementById("ships");
-    let amount = document.createElement("p");
-    amount.id = "shipsAmount";
-    shipsLeft.appendChild(amount);
-    amount.textContent = " " + this.remainingShips;
+  createShips: function() {
+    this.createShip(2, 'destroyer');
+    this.createShip(3, 'submarine');
+    this.createShip(3, 'cruiser');
+    this.createShip(4, 'battleship');
+    this.createShip(5, 'carrier');
   },
-  showRemainingMissiles: function() {
-    let missilesLeft = document.getElementById("missiles");
-    let amount = document.createElement("p");
-    amount.id = "missilesAmount";
-    missilesLeft.appendChild(amount);
-    amount.textContent = " " + this.remainingMissiles;
-  },
-  amendRemainingMissles: function() {
-    let missilesLeft = document.getElementById("missiles");
-    let missileAmount = document.getElementById("missilesAmount");
-    missilesLeft.removeChild(missileAmount);
-    this.showRemainingMissiles();
-    this.winLose();
-  },
-  amendRemainingShips: function() {
-    let shipsLeft = document.getElementById("ships");
-    let shipsAmount = document.getElementById("shipsAmount");
-    shipsLeft.removeChild(shipsAmount);
-    this.showRemainingShips();
-    this.winLose();
-  },
-  winLose: function() {
-    if (this.remainingMissiles !== 0 && this.remainingShips === 0){
-      alert("Congrats, you win!!!");
-    } else if (this.remainingMissiles === 0 && this.remainingShips !== 0) {
-      alert("Sorry, you lose. Try again!");
-    }
-  }
-}
-scoreboard.showRemainingShips();
-scoreboard.showRemainingMissiles();
-
-function hit(hitPosition) {
-  let hitPositionNumber = parseInt(hitPosition);
-  let hitBoardSquare = document.getElementById(hitPosition);
-  
-  for(let i = 0; i < shipFactory.ships.length; i++) {
-    for(let j = 0; j < shipFactory.ships[i].positions.length; j++) {
-      
-      if (shipFactory.ships[i].positions[j] === hitPositionNumber) {
-        shipFactory.ships[i].hit[j] = true;
-        shipFactory.ships[i].hitCounter++;
-        
-        if (shipFactory.ships[i].hitCounter === shipFactory.ships[i].positions.length) {
-          shipFactory.ships[i].sunk = true;
-          scoreboard.remainingShips -=1;
-          scoreboard.amendRemainingShips();
-        }
-        
-        hitBoardSquare.style.color = "black";
-        hitBoardSquare.style.backgroundColor = "red";
-      } else if (hitBoardSquare.textContent === "") {
-        hitBoardSquare.style.backgroundColor = "navy";
+  placeShips:function() {
+    for(let i = 0; i < shipFactory.ships.length; i++) {
+      for(let j = 0; j < shipFactory.ships[i].positions.length; j++){
+        let position = shipFactory.ships[i].positions[j];
+        let positionString = position.toString();
+        let boardSquare = document.getElementById(positionString);
+        boardSquare.className = 'boardSquare-ship';
+        // boardSquare.textContent = "X";
       }
     }
   }
 };
 
-function placeShips() {
-  for(let i = 0; i < shipFactory.ships.length; i++) {
-    for(let j = 0; j < shipFactory.ships[i].positions.length; j++){
-      let position = shipFactory.ships[i].positions[j];
-      let positionString = position.toString();
-      let boardSquare = document.getElementById(positionString);
-      boardSquare.textContent = "X";
+// Create Scoreboard
+let scoreboard = {
+  remainingShips: 5,
+  remainingMisses: 30,
+  showRemainingShips: function() {
+    let shipsLeft = document.getElementById("ships");
+    let amount = document.createElement("p");
+    amount.id = "shipsAmount";
+  },
+  showRemainingMisses: function() {
+    let missesLeft = document.getElementById("misses");
+    let amount = document.createElement("p");
+    amount.id = "missesAmount";
+    missesLeft.appendChild(amount);
+    amount.textContent = " " + this.remainingMisses;
+  },
+  amendRemainingMisses: function() {
+    let missesLeft = document.getElementById("misses");
+    let missesAmount = document.getElementById("missesAmount");
+    missesLeft.removeChild(missesAmount);
+    this.showRemainingMisses();
+    this.winLose();
+  },
+  amendRemainingShips: function() {
+    this.showRemainingShips();
+    this.winLose();
+  },
+  winLose: function() {
+    if (this.remainingShips == 0) {
+      alert("Congrats, you sunk my battleship!!! Play again?");
+    } else if (this.remainingMisses === 0 && this.remainingShips !== 0) {
+      alert("Sorry, you lose. Try again?");
     }
+    // gameplay.newGame();
   }
 }
-placeShips();
+
+let gameplay = {
+  hit: function(hitPosition) {
+    let hitPositionNumber = parseInt(hitPosition);
+    let hitBoardSquare = document.getElementById(hitPosition);
+    
+    for(let i = 0; i < shipFactory.ships.length; i++) {
+      for(let j = 0; j < shipFactory.ships[i].positions.length; j++) {
+        
+        if (shipFactory.ships[i].positions[j] === hitPositionNumber && hitBoardSquare.style.backgroundColor !== '#B91212') {
+          shipFactory.ships[i].hit[j] = true;
+          shipFactory.ships[i].hitCounter++;
+          hitBoardSquare.style.backgroundColor = "#B91212";
+          hitBoardSquare.style.color = '#000';
+          hitBoardSquare.textContent = "X";
+          
+          
+          if (shipFactory.ships[i].hitCounter === shipFactory.ships[i].positions.length) {
+            shipFactory.ships[i].sunk = true;
+            scoreboard.remainingShips -=1;
+            scoreboard.amendRemainingShips();
+            this.sunkenShip();
+          }
+          
+        } else if (hitBoardSquare.className !== 'boardSquare-ship') {
+          hitBoardSquare.style.backgroundColor = "#03355F";
+        }
+      }
+    }
+  },
+  sunkenShip: function() {
+    let destroyer = document.getElementById("destroyer");
+    let submarine = document.getElementById("submarine");
+    let cruiser = document.getElementById("cruiser");
+    let battleship = document.getElementById("battleship");
+    let carrier = document.getElementById("carrier");
+    let sunk = document.getElementById("sunk");
+    
+    for (let i = 0; i < shipFactory.ships.length; i++) {
+      if (shipFactory.ships[i].sunk === true && shipFactory.ships[i].name === 'destroyer') {
+        destroyer.style.textDecoration = 'line-through';
+        destroyer.style.color = '#660006';
+      } else if (shipFactory.ships[i].sunk === true && shipFactory.ships[i].name === 'submarine') {
+        submarine.style.textDecoration = 'line-through';
+        submarine.style.color = '#660006';
+      } else if (shipFactory.ships[i].sunk === true && shipFactory.ships[i].name === 'cruiser') {
+        cruiser.style.textDecoration = 'line-through';
+        cruiser.style.color = '#660006';
+      } else if (shipFactory.ships[i].sunk === true && shipFactory.ships[i].name === 'battleship') {
+        battleship.style.textDecoration = 'line-through';
+        battleship.style.color = '#660006';
+      } else if (shipFactory.ships[i].sunk === true && shipFactory.ships[i].name === 'carrier') {
+        carrier.style.textDecoration = 'line-through';
+        carrier.style.color = '#660006';
+      }
+    }
+    
+//     function hideSunk() {
+//       sunk.style.display = 'none'
+//     }
+//     // alert('You Sunk My Battleship!');
+    // sunk.style.display = 'block';
+    
+//     setTimeout(hideSunk(), 5000);
+  },
+  newGame: function() {
+   shipFactory.ships = [];
+    shipFactory.createShips();
+  }
+}
+
 
 function receiveAttack() {
-  let container = document.getElementById("container");
-  
-  container.addEventListener("click", function(event) {
+  let gameboard = document.getElementById("gameboard");
+  gameboard.addEventListener("click", function(event) {
     let elementClicked = event.target;
     
-    if (elementClicked.style.backgroundColor !== "red" && elementClicked.style.backgroundColor !== "navy"){
-      scoreboard.remainingMissiles -=1;
-      scoreboard.amendRemainingMissles();
+    if (elementClicked.className !== "boardSquare-ship" && elementClicked.style.backgroundColor !== "navy"){
+      scoreboard.remainingMisses -=1;
+      scoreboard.amendRemainingMisses();
     }
-    if (elementClicked.className === "boardSquare") {
-      hit(elementClicked.id);
+    
+    if (elementClicked.className === "boardSquare" || elementClicked.className === "boardSquare-ship") {
+      gameplay.hit(elementClicked.id);
     }
+    console.log(scoreboard.remainingShips);
   });
 }
 
+
+gameboardFactory.makeBoard();
+shipFactory.createShips();
+scoreboard.showRemainingMisses();
+shipFactory.placeShips();
 receiveAttack();
