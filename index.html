@@ -5,16 +5,45 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
   <body>
+    <h1>BATTLESHIP</h1>
+    
+    <div id='container'>
+
     <section id="scoreboard">
-      <h2 id="ships">Remaining Ships:</h2>
-      <h2 id="missiles">Remaining missiles:</h2>
+      <h2 id="misses">Remaining misses:</h2>
+      
     </section>
+      
+    <section id="gameboard">
+      <p class='letters'></p>
+    <p class='letters'>A</p>
+    <p class='letters'>B</p>
+    <p class='letters'>C</p>
+    <p class='letters'>D</p>
+    <p class='letters'>E</p>
+    <p class='letters'>F</p>
+    <p class='letters'>G</p>
+    <p class='letters'>H</p>
+    <p class='letters'>I</p>
+    <p class='letters'>J</p>
+      </section>
+
+    <section id='remainingShips'>
+      <h2 id='ships'>Remaining Ships:</h2>
+       <article id='ships-list'>
+      <p id='destroyer'>Destroyer (2)</p>
+      <p id='submarine'>Submarine (3)</p>
+      <p id='cruiser'>Cruiser (3)</p>
+      <p id='battleship'>Battleship (4)</p>
+      <p id='carrier'>Carrier (5)</p>
+    </article>
+      </section>
     
-    <section id="container"></section>
-    
-    <script src="script.js" defer></script>
+    </div>
+    <script src="/script.js" defer></script>
   </body>
 </html>
