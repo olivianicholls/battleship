@@ -283,10 +283,10 @@ let gameplay = {
     let turnText = document.getElementById("turn");
     
     if (turnCounter % 2 === 0) {
-      turnText.textContent = "Computer"s Turn";
+      turnText.textContent = "Computer's Turn";
       this.computerTurn();
     } else if (turnCounter % 2 !== 0){
-      turnText.textContent = "Player"s Turn";
+      turnText.textContent = "Player's Turn";
     }
 },
   computerNextGuess: function() {
@@ -332,7 +332,7 @@ let gameplay = {
         attackedDiv.style.backgroundColor = "#03355F";
         turnCounter++;
       }
-      turnText.textContent = "Player"s Turn";
+      turnText.textContent = "Player's Turn";
     }, 500);
   },
   hit: function(hitPosition) {
