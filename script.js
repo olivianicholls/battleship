@@ -321,7 +321,7 @@ let gameplay = {
             if (shipFactory.playerShips[i].positions[j] === computerGuessedDivNumber) {
               shipFactory.playerShips[i].hit[j] = true;
               shipFactory.playerShips[i].hitCounter++;
-              attackedDiv.style.backgroundColor = "#B91212";
+              attackedDiv.style.backgroundColor = "#E61C1C";
               attackedDiv.textContent = "X";
               
               if (shipFactory.playerShips[i].hitCounter === shipFactory.playerShips[i].positions.length) {
@@ -349,10 +349,10 @@ let gameplay = {
     for(let i = 0; i < shipFactory.computerShips.length; i++) {
       for(let j = 0; j < shipFactory.computerShips[i].positions.length; j++) {
         
-        if (shipFactory.computerShips[i].positions[j] === hitPositionNumber && hitBoardSquare.style.backgroundColor !== "#B91212") {
+        if (shipFactory.computerShips[i].positions[j] === hitPositionNumber && hitBoardSquare.style.backgroundColor !== "#E61C1C") {
           shipFactory.computerShips[i].hit[j] = true;
           shipFactory.computerShips[i].hitCounter++;
-          hitBoardSquare.style.backgroundColor = "#B91212";
+          hitBoardSquare.style.backgroundColor = "#E61C1C";
           hitBoardSquare.style.color = "#000";
           hitBoardSquare.textContent = "X";          
           
