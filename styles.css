@@ -11,8 +11,6 @@ body {
   background: linear-gradient(135deg, rgba(196,224,229,1) 0%, rgba(76,161,175,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4e0e5', endColorstr='#4ca1af', GradientType=1 );
   background-attachment: fixed;
-  display: grid;
-  grid-template-rows: 20% 60% 20%;
 }
 h1 {
   margin: 30px;
@@ -63,7 +61,7 @@ h1 {
   font-size: 50px;
   text-align: center;
 }
-#misses, #ships {
+#ships {
   padding: 0 60px;
   display: none;
 }
@@ -100,10 +98,18 @@ h1 {
   font-size: 80px;
 }
 
-/* TOP SECTION IS 1948 */
+
+/* MEDIA QUERIES */
+
 @media (max-width: 1493px) {
   #container {
     width: 100%;
+  }
+}
+
+@media (max-width: 1257px) {
+  #playerBoard, #computerBoard {
+    width: 90%;
   }
 }
 
@@ -112,41 +118,56 @@ h1 {
     font-size: 60px;
   }
 }
+
 @media (max-width: 968px) {
-  #playerBoard, #computerBoard {
-    width: 85%;
-    grid-template: repeat(11, 40px)/ repeat(11, 30px);
+  h1 {
+    font-size: 60px;
   }
+  #container {
+    display: block;
+  }
+  #playerBoard, #computerBoard {
+    grid-template: repeat(11, 10%)/ repeat(11, 10%);
+    width: 65%;
+    margin: 0 0 0 12%;
+}
   .letters, .numbers {
     font-size: 18px;
     padding-left: 10px;
   }
   #addShip {
     font-size: 50px;
-    padding: 60px;
+    padding: 0 60px;
   }
   #ships {
     font-size: 20px;
+    width: unset;
   }
   .boardSquare, .shipSquare {
     font-size: 35px;
   }
 }
+
+@media (max-width: 540px) {
+   h1 {
+    margin: 10px 0 0 0;
+  }
+  #playerBoard, #computerBoard {
+    width: 85%;
+    margin: 0;
+  }
+  .numbers, .letters {
+    top: 0;
+  }
+  #ships {
+    padding: 0;
+    width: unset;
+  }
+}
+
 @media (max-width: 420px) {
   body {
     display: block;
-  }
-  h1 {
-    font-size: 50px;
-    margin: 10px 0 0 0;
-  }
-  #container {
-    display: block;
-    width: 100%;
-  }
-  #playerBoard, #computerBoard {
-    grid-template: repeat(11, 30px)/ repeat(11, 30px);
-    width: 600px;
   }
   #addShip {
     padding: 0;
@@ -154,6 +175,7 @@ h1 {
   }
   #turn {
     font-size: 20px;
+    padding: 0 30px;
   }
   #ships { 
     font-size: 20px;
