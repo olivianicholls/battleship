@@ -158,6 +158,11 @@ let shipFactory = {
         let above = firstPosition - (j * 10);
         let below = firstPosition + (j * 10);
       
+      // if (elementClicked.style.backgroundColor !== "rgba(0, 0, 0, 0.12)") {
+      //   alert("THAT SPOT IS TAKEN");
+      // }
+      
+      
       if (j > 0) { 
 
         if (positionNumber === toTheLeft || positionNumber === toTheRight || positionNumber === above || positionNumber === below) {
@@ -263,7 +268,7 @@ let gameplay = {
     alert("Start sinking!");
     
     let scoreboard = document.getElementById("scoreboard");
-    let computerBoard = document.getElementById("computerBoardWrapper");
+    let computerBoardWrapper = document.getElementById("computerBoardWrapper");
     let addShip = document.getElementById("addShip");
     let turn = document.getElementById("turn");
     let ships = document.getElementById("ships");
@@ -274,7 +279,7 @@ let gameplay = {
     remainingShips.textContent = 5;
     
     scoreboard.style.display = "grid";
-    computerBoard.style.display = "grid";
+    computerBoardWrapper.style.display = "block";
     addShip.style.display = "none";
     turn.style.display = "block";
     ships.style.display = "grid";
