@@ -1,3 +1,10 @@
+let turnCounter = 1;
+
+let alertPlacement = document.getElementById("alertPlacement");
+let alertStart = document.getElementById("alertStart");
+let alertWin = document.getElementById("alertWin");
+let alertLose = document.getElementById("alertLose");
+
 function direction() {
   return Math.round(Math.random());
   // 0 = vertical
@@ -6,8 +13,6 @@ function direction() {
 function randomPosition() {
   return Math.floor(Math.random() * (100 - 1) + 1);
 }
-
-let turnCounter = 1;
 
 // gameboard factory
 let gameboardFactory = {
@@ -136,6 +141,7 @@ let shipFactory = {
     let computerBoard = document.getElementById("computerBoardWrapper");
     let playerBoard = document.getElementById("playerBoard");
     let addShip = document.createElement("p");
+    
     addShip.id = "addShip";
     computerBoard.insertAdjacentElement("afterend",addShip);
     
@@ -194,7 +200,7 @@ let shipFactory = {
           j++;
         
         } else {
-         alert("CANT GO THERE!");
+         alertPlacement.style.display = "grid";
         } 
       } else {
         shipFactory.playerShips[i].positions[j] = positionNumber;
@@ -231,13 +237,12 @@ let shipFactory = {
         if (i != 5) {
         addShip.textContent = "Place Your " + shipFactory.playerShips[i].name;
         } else if (i === 5){
-          gameplay.startGame();
+          alertStart.style.display = "grid";
         }
       }
     });
   }
 }
-
 
 // Create Scoreboard
 let scoreboard = {
@@ -253,19 +258,19 @@ let scoreboard = {
     this.winLose();
   },
   winLose: function() {
+    
     if (this.remainingComputerShips === 0) {
-      alert("Congrats, you sunk my battleship!!! Play again?");
-      location.reload();
+      alertWin.style.display = "grid";
+
     } else if (this.remainingPlayerShips === 0) {
-      alert("Sorry, you lose. Try again?");
-      location.reload();
+      alertLose.style.display = "grid";
+
     }
   }
 }
 
 let gameplay = {
   startGame: function() {
-    alert("Start sinking!");
     
     let scoreboard = document.getElementById("scoreboard");
     let computerBoardWrapper = document.getElementById("computerBoardWrapper");
@@ -341,7 +346,6 @@ let gameplay = {
     }, 500);
   },
   hit: function(hitPosition) {
-
     let idNumber = hitPosition.substr(6);
     let hitPositionNumber = parseInt(idNumber);
     let hitBoardSquare = document.getElementById(hitPosition);
@@ -362,7 +366,7 @@ let gameplay = {
             scoreboard.amendRemainingShips();
             this.sunkenShip();
           }
-        } else if (hitBoardSquare.className !== "shipSquare") {
+        } else if (hitBoardSquare.className === "boardSquare") {
           hitBoardSquare.style.backgroundColor = "#03355F";
         }
       }
@@ -376,18 +380,20 @@ let gameplay = {
 
 function playerAttack() {
   let computerBoard = document.getElementById("computerBoard");
+  let waitTurn = document.getElementById("alertTurn");
+  
   computerBoard.addEventListener("click", function(event) {
-    if (turnCounter % 2 === 0) {
-      alert("WAIT YOUR TURN!")
-    } else {
-      
     let elementClicked = event.target;
-      
-    if (elementClicked.style.backgroundColor !== "rgb(3, 53, 95)" && elementClicked.style.backgroundColor !== "rgb(185, 18, 18)") {
-      gameplay.hit(elementClicked.id);
-       turnCounter++
-      gameplay.turns();
-    }
+    if (turnCounter % 2 === 0) {
+      waitTurn.style.display = "grid";setTimeout(function() {
+        waitTurn.style.display = "none";
+      }, 500);
+    } else {
+      if (elementClicked.style.backgroundColor !== "#03355f" && elementClicked.style.backgroundColor !== "#E61C1C" && alertWin.style.display !== "grid" && alertLose.style.display !== "grid") {
+        gameplay.hit(elementClicked.id);
+        turnCounter++;
+        gameplay.turns();
+      }
     }
   });
 }
@@ -400,3 +406,33 @@ shipFactory.createAllPlayerShips();
 shipFactory.placePlayerShips();
 shipFactory.placeComputerShips();
 playerAttack();
+
+
+alertPlacement.addEventListener("click", function() {
+  let elementClicked = event.target;
+  if (elementClicked.tagName === "BUTTON") { 
+    alertPlacement.style.display = "none";
+  }
+});
+
+alertStart.addEventListener("click", function(event) {
+  let elementClicked = event.target;
+  if (elementClicked.tagName === "BUTTON") { 
+    alertStart.style.display = "none";
+    gameplay.startGame();
+  }
+});
+
+alertWin.addEventListener("click", function(event) {
+  let elementClicked = event.target;
+  if (elementClicked.tagName === "BUTTON") { 
+    location.reload();
+  }
+});
+
+alertLose.addEventListener("click", function(event) {
+  let elementClicked = event.target;
+  if (elementClicked.tagName === "BUTTON") { 
+    location.reload();
+  }
+});
