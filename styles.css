@@ -212,7 +212,26 @@ button {
   #remainingShips {
     font-size: 30px;
   }
-  .boardSquare, .shipSquare {
-    font-size: 22px;
+}
+@media (max-width: 360px) {
+  h1 {
+    font-size: 30px;
+    display: none;
+  }
+ #playerBoard, #computerBoard {
+   
+   height: 400px;
+  }
+  #container {
+    margin-top: 90px;
+  }
+  .boardTitles {
+    position: relative;
+    top: 20px;
+  }
+  #addShip {
+    position: absolute;
+    top: 0;
+    margin: 10px 0;
   }
 }
