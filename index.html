@@ -10,7 +10,7 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    </head>
    <body>
-      <h1>BATTLESHIP</h1>
+      <h1>BATTLESHIP</h1>     
       <section id="scoreboard">
          <h2 id="turn">Player's Turn</h2>
          <h2 id="ships">Remaining Ships To Sink:</h2>
@@ -53,6 +53,27 @@
             </h3>
          </div>
       </div>
+       <section id="alerts">
+         <div class="alert"  id="alertPlacement">
+           <p>CAN'T GO THERE</p>
+           <button class="okayButton">OKAY</button>
+         </div>
+         <div class="alert"  id="alertStart">
+           <p>START SINKING!</p>
+           <button class="okayButton">OKAY</button>
+         </div>
+         <div class="alert"  id="alertTurn">
+           <p>WAIT YOUR TURN!</p>
+         </div>
+         <div class="alert"  id="alertWin">
+           <p>YOU WIN</p>
+           <button class="playAgainButton"> PLAY AGAIN?</button>
+         </div>
+         <div class="alert" id="alertLose">
+           <p>YOU LOSE</p>
+           <button class="playAgainButton">PLAY AGAIN?</button>
+         </div>
+     </section>
       <script src="script.js" defer></script>
    </body>
 </html>
