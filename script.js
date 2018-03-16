@@ -244,6 +244,7 @@ let shipFactory = {
   }
 }
 
+
 // Create Scoreboard
 let scoreboard = {
   remainingPlayerShips: 5,
@@ -398,6 +399,22 @@ function playerAttack() {
   });
 }
 
+function alertActions(event, alert) {
+  let elementClicked = event.target;
+  if (elementClicked.className === "okayButton") { 
+    alert.style.display = "none";
+    if (elementClicked.parentElement.id === "alertStart") {
+      gameplay.startGame();
+    }
+  } else if (elementClicked.className === "playAgainButton") { 
+    location.reload();
+  }
+}
+
+alertPlacement.addEventListener("click", function(){alertActions(event, alertPlacement)});
+alertStart.addEventListener("click", function() {alertActions(event, alertStart)});
+alertWin.addEventListener("click", function() {alertActions(event, alertWin)});
+alertLose.addEventListener("click", function() {alertActions(event, alertLose)});
 
 gameboardFactory.makeBoard("playerBoard", "pBoard");
 gameboardFactory.makeBoard("computerBoard", "cBoard");
@@ -406,33 +423,3 @@ shipFactory.createAllPlayerShips();
 shipFactory.placePlayerShips();
 shipFactory.placeComputerShips();
 playerAttack();
-
-
-alertPlacement.addEventListener("click", function() {
-  let elementClicked = event.target;
-  if (elementClicked.tagName === "BUTTON") { 
-    alertPlacement.style.display = "none";
-  }
-});
-
-alertStart.addEventListener("click", function(event) {
-  let elementClicked = event.target;
-  if (elementClicked.tagName === "BUTTON") { 
-    alertStart.style.display = "none";
-    gameplay.startGame();
-  }
-});
-
-alertWin.addEventListener("click", function(event) {
-  let elementClicked = event.target;
-  if (elementClicked.tagName === "BUTTON") { 
-    location.reload();
-  }
-});
-
-alertLose.addEventListener("click", function(event) {
-  let elementClicked = event.target;
-  if (elementClicked.tagName === "BUTTON") { 
-    location.reload();
-  }
-});
