@@ -272,8 +272,8 @@ let scoreboard = {
 
 let gameplay = {
   startGame: function() {
-    
     let scoreboard = document.getElementById("scoreboard");
+    let container = document.getElementById("container");
     let computerBoardWrapper = document.getElementById("computerBoardWrapper");
     let addShip = document.getElementById("addShip");
     let turn = document.getElementById("turn");
@@ -284,6 +284,7 @@ let gameplay = {
     remainingShips.id = "remainingShips";
     remainingShips.textContent = 5;
     
+    container.style.marginTop = 0;
     scoreboard.style.display = "grid";
     computerBoardWrapper.style.display = "block";
     addShip.style.display = "none";
