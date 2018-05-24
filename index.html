@@ -7,51 +7,69 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="styles.css">
       <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    </head>
    <body>
-      <h1>BATTLESHIP</h1>     
+      <h1>BATTLESHIP</h1>    
+     <div id="instructions-wrapper">
+       <h3>INSTRUCTIONS</h3><p>
+         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut enim mauris. Vestibulum sodales justo nibh, vel viverra mauris sagittis at. Ut in sagittis ipsum. Phasellus eget lacus quis tellus semper viverra. Fusce massa justo, condimentum nec turpis ut, vestibulum fermentum leo. Nulla pellentesque mollis ex, eget suscipit odio eleifend malesuada. Quisque iaculis massa vel turpis interdum, eu congue lectus euismod.
+       </p>
+       <button id="startButton">BEGIN</button>
+       
+     </div>
+     <div id="game-wrapper">
+       <button id="instructions-button">?</button>
       <section id="scoreboard">
          <h2 id="turn">Player's Turn</h2>
-         <h2 id="ships">Ships To Sink:</h2>
+         <h2 id="shipsToSink">Ships To Sink:</h2>
       </section>
       <div id="container">
         <div id="computerBoardWrapper">
             <section id="computerBoard">
-               <p class="letters"></p>
-               <p class="letters">A</p>
-               <p class="letters">B</p>
-               <p class="letters">C</p>
-               <p class="letters">D</p>
-               <p class="letters">E</p>
-               <p class="letters">F</p>
-               <p class="letters">G</p>
-               <p class="letters">H</p>
-               <p class="letters">I</p>
-               <p class="letters">J</p>
+              <div id="blankSquare"></div>
+              <div class="boardLetters">A</div>
+              <div class="boardLetters">B</div>
+              <div class="boardLetters">C</div>
+              <div class="boardLetters">D</div>
+              <div class="boardLetters">E</div>
+              <div class="boardLetters">F</div>
+              <div class="boardLetters">G</div>
+              <div class="boardLetters">H</div>
+              <div class="boardLetters">I</div>
+              <div class="boardLetters">J</div>
             </section>
-            <h3 class="boardTitles">Computer Board</h3>
+            <h3 class="boardTitles">
+               Computer Board
+            </h3>
          </div>
+        <p id="addShip">Click a Square to Place Your </p>
          <div id="playerBoardWrapper">
             <section id="playerBoard">
-               <p class="letters"></p>
-               <p class="letters">A</p>
-               <p class="letters">B</p>
-               <p class="letters">C</p>
-               <p class="letters">D</p>
-               <p class="letters">E</p>
-               <p class="letters">F</p>
-               <p class="letters">G</p>
-               <p class="letters">H</p>
-               <p class="letters">I</p>
-               <p class="letters">J</p>
+              <div></div>
+              <div class="boardLetters">A</div>
+              <div class="boardLetters">B</div>
+              <div class="boardLetters">C</div>
+              <div class="boardLetters">D</div>
+              <div class="boardLetters">E</div>
+              <div class="boardLetters">F</div>
+              <div class="boardLetters">G</div>
+              <div class="boardLetters">H</div>
+              <div class="boardLetters">I</div>
+              <div class="boardLetters">J</div>
             </section>
-            <h3 class="boardTitles">Your Board</h3>
+            <h3 class="boardTitles">
+               Your Board
+            </h3>
          </div>
+         
       </div>
        <section id="alerts">
          <div class="alert"  id="alertPlacement">
-           <p>CAN'T GO THERE</p>
+           <p>PLEASE CONTINUE YOUR SHIP IN A STRAIGHT LINE!</p>
+           <button class="okayButton">OKAY</button>
+         </div>
+         <div class="alert"  id="alertUsed">
+           <p>YOU'VE ALREADY USED THAT SPACE!</p>
            <button class="okayButton">OKAY</button>
          </div>
          <div class="alert"  id="alertStart">
@@ -62,7 +80,7 @@
            <p>WAIT YOUR TURN!</p>
          </div>
          <div class="alert"  id="alertWin">
-           <p>YOU WIN</p>
+           <p>YOU WIN!</p>
            <button class="playAgainButton"> PLAY AGAIN?</button>
          </div>
          <div class="alert" id="alertLose">
@@ -70,6 +88,7 @@
            <button class="playAgainButton">PLAY AGAIN?</button>
          </div>
      </section>
+     </div>
       <script src="script.js" defer></script>
    </body>
 </html>
